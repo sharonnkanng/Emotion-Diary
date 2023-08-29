@@ -22,7 +22,7 @@ const DiaryEditor: React.FC<DiaryEditorProps> = ({ isEdit, originData }) => {
     const handleClickEmotion = (emotion: number) => {
         setEmotion(emotion);
     };
-    const { onCreate, onEdit } = useContext(DiaryContext) || {};
+    const { onCreate, onEdit, onDelete } = useContext(DiaryContext) || {};
 
     const handleSubmit = () => {
         if (content.length < 1) {
@@ -40,6 +40,15 @@ const DiaryEditor: React.FC<DiaryEditorProps> = ({ isEdit, originData }) => {
         navigate("/", { replace: true });
     };
 
+    const handleDelete = () => {
+        if (window.confirm("Are you sure to delete this diary?")) {
+            if (originData && isEdit && onDelete) {
+                onDelete(originData.id);
+                navigate("/", { replace: true });
+            }
+        }
+    };
+
     useEffect(() => {
         if (isEdit && originData) {
             setEmotion(originData.emotion);
@@ -52,6 +61,7 @@ const DiaryEditor: React.FC<DiaryEditorProps> = ({ isEdit, originData }) => {
             <Header
                 headText={isEdit ? "Edit your diary" : "Write a new diary"}
                 leftChild={<MyButton text="Previous" onClick={() => navigate(-1)} />}
+                rightChild={isEdit && <MyButton text={"Delete"} type={"negative"} onClick={handleDelete} />}
             />
             <div>
                 <section>

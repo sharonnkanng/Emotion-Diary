@@ -1,4 +1,4 @@
-import React, { useRef, useReducer } from "react";
+import React, { useRef, useReducer, useEffect } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -6,6 +6,7 @@ import New from "pages/New";
 import Diary from "pages/Diary";
 import Home from "pages/Home";
 import Edit from "pages/Edit";
+import DiaryList from "components/DiaryList";
 
 interface DataAction {
     type: string;
@@ -23,8 +24,10 @@ const diaryReducer = (state: ProcessedComment[], action: DataAction): ProcessedC
     let newState: ProcessedComment[] = [];
 
     switch (action.type) {
-        case "INIT":
-            return action.data ? [action.data] : [];
+        case "INIT": {
+            return action.data ? [action.data].flat() : [];
+        }
+
         case "CREATE": {
             if (!action.data) break;
             const newItem = {
@@ -33,18 +36,21 @@ const diaryReducer = (state: ProcessedComment[], action: DataAction): ProcessedC
             newState = [newItem, ...state];
             break;
         }
-        case "DELETE":
+        case "DELETE": {
             newState = state.filter((it) => it.id !== action.targetID);
             break;
+        }
 
-        case "EDIT":
+        case "EDIT": {
             if (!action.data) break;
             newState = state.map((it) => (it.id === action.data?.id ? { ...action.data } : it));
             break;
-
+        }
         default:
             return state;
     }
+
+    localStorage.setItem("diary", JSON.stringify(newState));
     return newState;
 };
 
@@ -53,45 +59,26 @@ interface DiaryContextType {
     dispatch: React.Dispatch<DataAction>;
     onCreate: (date: number, content: string, emotion: number) => void;
     onEdit: (targetId: number, date: number, content: string, emotion: number) => void;
+    onDelete: (targetId: number) => void;
 }
 
 export const DiaryContext = React.createContext<DiaryContextType | undefined>(undefined);
 
-const dummyData: ProcessedComment[] = [
-    {
-        id: 1,
-        date: 1692863595111,
-        emotion: 1,
-        content: "I'm happy 1",
-    },
-    {
-        id: 2,
-        date: 1692863595112,
-        emotion: 2,
-        content: "I'm happy 2",
-    },
-    {
-        id: 3,
-        date: 1692863595113,
-        emotion: 3,
-        content: "I'm happy 3",
-    },
-    {
-        id: 4,
-        date: 1692863595114,
-        emotion: 4,
-        content: "I'm happy 4",
-    },
-    {
-        id: 5,
-        date: 1692863595115,
-        emotion: 5,
-        content: "I'm happy 5",
-    },
-];
 function App() {
-    const [data, dispatch] = useReducer(diaryReducer, dummyData);
-    const dataId = useRef(dummyData.length + 1);
+    const [data, dispatch] = useReducer(diaryReducer, []);
+
+    useEffect(() => {
+        const localData = localStorage.getItem("diary");
+        if (localData) {
+            const diaryList = JSON.parse(localData).sort((a: ProcessedComment, b: ProcessedComment) => b.id - a.id);
+            dataId.current = diaryList[0].id + 1;
+
+            dispatch({ type: "INIT", data: diaryList });
+        }
+    }, []);
+
+    // TODO
+    const dataId = useRef(0);
 
     const onCreate = (date: number, content: string, emotion: number) => {
         dispatch({
@@ -125,7 +112,7 @@ function App() {
     };
     return (
         <div className="App">
-            <DiaryContext.Provider value={{ data, dispatch, onCreate, onEdit }}>
+            <DiaryContext.Provider value={{ data, dispatch, onCreate, onEdit, onDelete }}>
                 <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<Home />} />

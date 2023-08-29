@@ -29,7 +29,6 @@ const Diary = () => {
         return <div className="DiaryPage">Loading...</div>;
     } else {
         const currentImotionData = emotionList.find((it) => it.emotion_id === data.emotion);
-        console.log(currentImotionData);
 
         return (
             <div className="DiaryPage">

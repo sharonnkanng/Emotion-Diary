@@ -42,8 +42,8 @@ const ControlMenu: React.FC<ControlMenuProps> = ({ value, onChange, optionList }
 };
 const DiaryList: React.FC<DiaryListProps> = ({ diaryList }) => {
     const navigate = useNavigate();
-    const [sortType, setSortType] = useState("latest");
-    const [filter, setFilter] = useState("all");
+    const [sortType, setSortType] = useState<Option["value"]>("latest");
+    const [filter, setFilter] = useState<Option["value"]>("all");
 
     const filterCallBack = (item: ProcessedComment) => {
         if (filter === "positive") {

@@ -27,7 +27,7 @@ const Home: React.FC = () => {
 
     useEffect(() => {
         const firstDay = new Date(curDate.getFullYear(), curDate.getMonth(), 1).getTime();
-        const lastDay = new Date(curDate.getFullYear(), curDate.getMonth() + 1, 0).getTime();
+        const lastDay = new Date(curDate.getFullYear(), curDate.getMonth() + 1, 0, 23, 59, 59).getTime();
         if (diaryList) {
             setData(diaryList.data.filter((item) => item.date >= firstDay && item.date <= lastDay));
         }

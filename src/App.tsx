@@ -91,7 +91,7 @@ const dummyData: ProcessedComment[] = [
 ];
 function App() {
     const [data, dispatch] = useReducer(diaryReducer, dummyData);
-    const dataId = useRef(0);
+    const dataId = useRef(dummyData.length + 1);
 
     const onCreate = (date: number, content: string, emotion: number) => {
         dispatch({

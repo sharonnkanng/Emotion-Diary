@@ -13,6 +13,11 @@ const Diary = () => {
     const [data, setData] = useState<ProcessedComment | undefined>();
 
     useEffect(() => {
+        const titleElement = document.getElementsByTagName("title")[0];
+        titleElement.innerText = `Emotion Diary - Detail ${id}`;
+    }, []);
+
+    useEffect(() => {
         if (diaryList) {
             const targetDiary = diaryList.data.find((it) => it.id === Number(id));
 

@@ -7,7 +7,6 @@ import New from "pages/New";
 import Diary from "pages/Diary";
 import Home from "pages/Home";
 import Edit from "pages/Edit";
-import DiaryList from "components/DiaryList";
 
 interface DataAction {
     type: string;
@@ -73,13 +72,14 @@ function App() {
         const localData = localStorage.getItem("diary");
         if (localData) {
             const diaryList = JSON.parse(localData).sort((a: ProcessedComment, b: ProcessedComment) => b.id - a.id);
-            dataId.current = diaryList[0].id + 1;
 
-            dispatch({ type: "INIT", data: diaryList });
+            if (diaryList.length >= 1) {
+                dataId.current = diaryList[0].id + 1;
+                dispatch({ type: "INIT", data: diaryList });
+            }
         }
     }, []);
 
-    // TODO
     const dataId = useRef(0);
 
     const onCreate = (date: number, content: string, emotion: number) => {

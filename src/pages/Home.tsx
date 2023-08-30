@@ -33,6 +33,11 @@ const Home: React.FC = () => {
         }
     }, [diaryList, curDate]);
 
+    useEffect(() => {
+        const titleElement = document.getElementsByTagName("title")[0];
+        titleElement.innerText = "Emotion Diary";
+    }, []);
+
     const increaseMonth = () => {
         setCurDate(new Date(curDate.getFullYear(), curDate.getMonth() + 1));
     };

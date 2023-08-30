@@ -10,6 +10,11 @@ const Edit: React.FC = () => {
     const diaryList = useContext(DiaryContext);
 
     useEffect(() => {
+        const titleElement = document.getElementsByTagName("title")[0];
+        titleElement.innerText = `Emotion Diary - Edit ${id}`;
+    }, []);
+
+    useEffect(() => {
         if (diaryList) {
             const targetDiary = diaryList.data.find((it) => it.id === Number(id));
             if (targetDiary) {

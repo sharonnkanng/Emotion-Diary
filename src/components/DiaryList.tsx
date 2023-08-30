@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { ProcessedComment } from "App";
 import MyButton from "./MyButton";

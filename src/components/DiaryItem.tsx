@@ -31,4 +31,4 @@ const DiaryItem: React.FC<{ id: number; emotion: number; content: string; date: 
     );
 };
 
-export default DiaryItem;
+export default React.memo(DiaryItem);

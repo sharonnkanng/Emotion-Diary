@@ -20,4 +20,4 @@ const EmotionItem: React.FC<EmotionItemProps> = ({ emotion_id, emotion_img, emot
     );
 };
 
-export default EmotionItem;
+export default React.memo(EmotionItem);

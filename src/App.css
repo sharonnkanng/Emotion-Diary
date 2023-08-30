@@ -10,7 +10,8 @@
     background-size: cover;
     background-position: center;
     color: #ececec;
-    width: 620px;
+    margin-left: -20px;
+    width: 640px;
 }
 
 .landing-page  h1 {

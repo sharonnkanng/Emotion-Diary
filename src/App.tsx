@@ -1,7 +1,7 @@
 import React, { useRef, useReducer, useEffect, useState } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LoadingScreen from "pages/Loading";
+import LoadingScreen from "pages/Landing";
 
 import New from "pages/New";
 import Diary from "pages/Diary";

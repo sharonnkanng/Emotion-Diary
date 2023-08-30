@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { useNavigate } from "react-router";
 import { ProcessedComment } from "App";
 import MyButton from "./MyButton";
@@ -40,6 +40,7 @@ const ControlMenu: React.FC<ControlMenuProps> = ({ value, onChange, optionList }
         </select>
     );
 };
+
 const DiaryList: React.FC<DiaryListProps> = ({ diaryList }) => {
     const navigate = useNavigate();
     const [sortType, setSortType] = useState<Option["value"]>("latest");

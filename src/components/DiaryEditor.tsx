@@ -1,7 +1,7 @@
 import Header from "./Header";
 import MyButton from "./MyButton";
 import { useNavigate } from "react-router";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import EmotionItem from "./EmotionItem";
 import { DiaryContext, ProcessedComment } from "App";
 import { getStringDate } from "util/date";
@@ -19,9 +19,10 @@ const DiaryEditor: React.FC<DiaryEditorProps> = ({ isEdit, originData }) => {
     const [date, setDate] = useState<string>(getStringDate(new Date()));
     const [content, setContent] = useState<string>("");
 
-    const handleClickEmotion = (emotion: number) => {
+    const handleClickEmotion = useCallback((emotion: number) => {
         setEmotion(emotion);
-    };
+    }, []);
+
     const { onCreate, onEdit, onDelete } = useContext(DiaryContext) || {};
 
     const handleSubmit = () => {

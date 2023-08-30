@@ -19,7 +19,7 @@ const Edit: React.FC = () => {
             }
         }
     }, [diaryList, id]);
-    return <div>{originData && <DiaryEditor isEdit={true} originData={originData} />}</div>;
+    return <div className="EditPage">{originData && <DiaryEditor isEdit={true} originData={originData} />}</div>;
 };
 
 export default Edit;

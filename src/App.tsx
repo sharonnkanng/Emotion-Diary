@@ -1,6 +1,7 @@
-import React, { useRef, useReducer, useEffect } from "react";
+import React, { useRef, useReducer, useEffect, useState } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LoadingScreen from "pages/Loading";
 
 import New from "pages/New";
 import Diary from "pages/Diary";
@@ -66,6 +67,7 @@ export const DiaryContext = React.createContext<DiaryContextType | undefined>(un
 
 function App() {
     const [data, dispatch] = useReducer(diaryReducer, []);
+    const [loadingComplete, setLoadingComplete] = useState(false);
 
     useEffect(() => {
         const localData = localStorage.getItem("diary");
@@ -110,18 +112,27 @@ function App() {
             },
         });
     };
+
+    const handleLoadingComplete = () => {
+        setLoadingComplete(true);
+    };
+
     return (
         <div className="App">
-            <DiaryContext.Provider value={{ data, dispatch, onCreate, onEdit, onDelete }}>
-                <BrowserRouter>
-                    <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/new" element={<New />} />
-                        <Route path="/diary/:id" element={<Diary />} />
-                        <Route path="/edit/:id" element={<Edit />} />
-                    </Routes>
-                </BrowserRouter>
-            </DiaryContext.Provider>
+            {loadingComplete ? (
+                <DiaryContext.Provider value={{ data, dispatch, onCreate, onEdit, onDelete }}>
+                    <BrowserRouter>
+                        <Routes>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/new" element={<New />} />
+                            <Route path="/diary/:id" element={<Diary />} />
+                            <Route path="/edit/:id" element={<Edit />} />
+                        </Routes>
+                    </BrowserRouter>
+                </DiaryContext.Provider>
+            ) : (
+                <LoadingScreen onLoadingComplete={handleLoadingComplete} />
+            )}
         </div>
     );
 }

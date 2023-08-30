@@ -1,5 +1,50 @@
 @import url('https://fonts.googleapis.com/css2?family=Bitter:wght@300&family=Indie+Flower&display=swap');
 
+.landing-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-image: url('/public/assets/Tulip.jpg'); /* Adjust the path */
+    background-size: cover;
+    background-position: center;
+    color: #ececec;
+    width: 620px;
+}
+
+.landing-page  h1 {
+    font-size: 40px;
+    font-weight: bold;
+    padding: 20px;
+    text-align: center;
+    z-index: 0;
+}
+
+.landing-page .blink-me {
+    animation: blinker 5s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+
+.landing-page .MyButton {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+}
+
+.landing-page .MyButton:hover {
+    transform: scale(1.05);
+    background-color: #4caf50;
+}
+
 body {
     background-color: #f6f6f6;
     display: flex;
@@ -17,16 +62,18 @@ body {
 }
 
 #root {
-    width: 600px;
     background-color: white;
     box-shadow: rgba(100,100,111,0.2), 0, 7px 29px 0px;
 }
 
+
 .App {
+    width: 600px;
     min-height: 100vh;
     padding-left: 20px;
     padding-right: 20px;
 }
+
 
 /* MyButton */
 
